@@ -1,8 +1,8 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+// eslint-disable-next-line no-unused-vars
+import Chart from "chart.js/auto";
 import { Col, Row, Typography } from "antd";
-
-const { Title } = Typography;
 
 const LineChart = ({ coinHistory, currentPrice, coinName }) => {
   const coinPrice = [];
@@ -14,7 +14,9 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 
   for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
     coinTimestamp.push(
-      new Date(coinHistory?.data?.history[i].timestamp).toLocaleDateString()
+      new Date(
+        coinHistory?.data?.history[i].timestamp * 1000
+      ).toLocaleDateString()
     );
   }
   const data = {
@@ -31,30 +33,23 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
   };
 
   const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
+    responsive: true,
   };
 
+  if (!coinHistory) return "uh oh";
   return (
     <>
       <Row className="chart-header">
-        <Title level={2} className="chart-title">
+        <Typography.Title level={2} className="chart-title">
           {coinName} Price Chart{" "}
-        </Title>
+        </Typography.Title>
         <Col className="price-container">
-          <Title level={5} className="price-change">
+          <Typography.Title level={5} className="price-change">
             Change: {coinHistory?.data?.change}%
-          </Title>
-          <Title level={5} className="current-price">
+          </Typography.Title>
+          <Typography.Title level={5} className="current-price">
             Current {coinName} Price: $ {currentPrice}
-          </Title>
+          </Typography.Title>
         </Col>
       </Row>
       <Line data={data} options={options} />

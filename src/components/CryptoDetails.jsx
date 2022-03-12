@@ -20,6 +20,7 @@ import {
   useGetCryptoHistoryQuery,
 } from "../services/cryptoApi";
 import Loader from "./Loader";
+// eslint-disable-next-line no-unused-vars
 import LineChart from "./LineChart";
 
 const { Title, Text } = Typography;
@@ -29,6 +30,7 @@ const CryptoDetails = () => {
   const { coinId } = useParams();
   const [timeperiod, setTimeperiod] = useState("7d");
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+  // eslint-disable-next-line no-unused-vars
   const { data: coinHistory } = useGetCryptoHistoryQuery({
     coinId,
     timeperiod,
@@ -123,7 +125,9 @@ const CryptoDetails = () => {
         onChange={(value) => setTimeperiod(value)}
       >
         {time.map((date) => (
-          <Option key={date}>{date}</Option>
+          <Option key={date} value={date}>
+            {date}
+          </Option>
         ))}
       </Select>
       <LineChart
